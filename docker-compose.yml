@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  library_api:
+    build: .
+    working_dir: /library/app
+    restart: always
+    command: "uvicorn api:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - .:/library
+    ports:
+      - "8000:8000"
