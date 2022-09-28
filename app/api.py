@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 
 from .database.db import db
-from .routers import users, tags
+from .routers import users, tags, genres
 
 
 app = FastAPI()
 app.include_router(users.router, prefix="/api/v1")
 app.include_router(tags.router, prefix="/api/v1")
+app.include_router(genres.router, prefix="/api/v1")
 
 
 @app.on_event("startup")

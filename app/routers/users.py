@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from asyncpg.exceptions import UniqueViolationError
 
 from ..schema import UserIn as SchemaUserIn, UserOut as SchemaUserOut
 from ..database.models import User
@@ -24,5 +25,8 @@ async def get_user_by_id(user_id: int):
 
 @router.post("/")
 async def create_user(user: SchemaUserIn):
-	user_id = await User.create(**user.dict())
+	try:
+		user_id = await User.create(**user.dict())
+	except UniqueViolationError:
+		raise HTTPException(status_code=400, detail="User already exists")
 	return {"user_id": user_id}
