@@ -57,7 +57,7 @@ tags = sqlalchemy.Table(
 	"tags",
 	metadata,
 	Column("id", Integer, primary_key=True, index=True, autoincrement=True),
-	Column("title", String(24), nullable=False)
+	Column("title", String(24), nullable=False, unique=True)
 )
 
 

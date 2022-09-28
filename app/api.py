@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 
-from app.database.db import db
-from app.database.models import User as ModelUser
-from app.schema import User as SchemaUser
+from .database.db import db
+from .routers import users, tags
 
 
 app = FastAPI()
+app.include_router(users.router, prefix="/api/v1")
+app.include_router(tags.router, prefix="/api/v1")
 
 
 @app.on_event("startup")
@@ -18,20 +19,3 @@ async def shutdown():
 	await db.disconnect()
 
 
-@app.post("/users")
-async def create_user(user: SchemaUser):
-	user_id = await ModelUser.create(**user.dict())
-	return {"user_id": user_id}
-
-
-@app.get("/users", response_model=list[SchemaUser])
-async def get_users():
-	users = await ModelUser.get_all()
-	users = [SchemaUser(**user) for user in users]
-	return users
-
-
-@app.get("/users/{uuid}", response_model=SchemaUser)
-async def get_user(uuid: int):
-	user = await ModelUser.get(uuid)
-	return SchemaUser(**user)
