@@ -23,7 +23,7 @@ async def get_tag_by_id(tag_id: int):
 	return SchemaTagOut(**tag)
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def create_tag(tag: SchemaTagIn):
 	try:
 		tag_id = await Tag.create(**tag.dict())

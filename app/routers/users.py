@@ -23,7 +23,7 @@ async def get_user_by_id(user_id: int):
 	return SchemaUserOut(**user)
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def create_user(user: SchemaUserIn):
 	try:
 		user_id = await User.create(**user.dict())

@@ -1,0 +1,8 @@
+###
+PUT http://localhost:8000/api/v1/genres/8
+Content-Type: application/json
+
+{
+	"title": "Комедия",
+    "description": "Новое описание жанра комедия"
+}

@@ -32,3 +32,8 @@ class Genre:
 		query = genres.insert().values(**genre)
 		genre_id = await db.execute(query)
 		return genre_id
+
+	@classmethod
+	async def update(cls, idx, **genre):
+		query = genres.update(genres.c.id == idx).values(**genre)
+		await db.execute(query)

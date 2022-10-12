@@ -23,3 +23,12 @@ Content-Type: application/json
 	"title": "Ужасы",
     "description": "Описание жанра ужасы"
 }
+
+###
+POST http://localhost:8000/api/v1/genres/
+Content-Type: application/json
+
+{
+	"title": "Комедия",
+    "description": "Описание жанра комедия"
+}

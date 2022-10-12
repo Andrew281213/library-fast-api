@@ -23,10 +23,16 @@ async def get_genre_by_id(genre_id: int):
 	return SchemaGenreOut(**genre)
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def create_genre(genre: SchemaGenreIn):
 	try:
 		genre_id = await Genre.create(**genre.dict())
 	except UniqueViolationError:
 		raise HTTPException(status_code=400, detail="Genre already exists")
 	return genre_id
+
+
+@router.put("/{genre_id}", status_code=200)
+async def update_genre(genre_id: int, genre: SchemaGenreIn):
+	await Genre.update(idx=genre_id, **genre.dict())
+	return SchemaGenreOut(id=genre_id, **genre.dict())
