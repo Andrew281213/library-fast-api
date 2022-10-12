@@ -36,3 +36,8 @@ class Tag:
 	async def update(cls, idx, **tag):
 		query = tags.update(tags.c.id == idx).values(**tag)
 		await db.execute(query)
+	
+	@classmethod
+	async def delete(cls, idx: int):
+		query = tags.delete(tags.c.id == idx)
+		await db.execute(query)

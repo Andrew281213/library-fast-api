@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from asyncpg.exceptions import UniqueViolationError
 
 from app.schemas.genre_schema import GenreIn as SchemaGenreIn, GenreOut as SchemaGenreOut
 from app.database.models.genre_model import Genre
+from app.utils.dependencies import is_admin
 
 
 router = APIRouter(prefix="/genres", tags=["genres"])
@@ -23,7 +24,7 @@ async def get_genre_by_id(genre_id: int):
 	return SchemaGenreOut(**genre)
 
 
-@router.post("/", status_code=201)
+@router.post("/", status_code=201, dependencies=[Depends(is_admin)])
 async def create_genre(genre: SchemaGenreIn):
 	try:
 		genre_id = await Genre.create(**genre.dict())
@@ -32,7 +33,7 @@ async def create_genre(genre: SchemaGenreIn):
 	return genre_id
 
 
-@router.put("/{genre_id}", status_code=200, response_model=SchemaGenreOut)
+@router.put("/{genre_id}", status_code=200, response_model=SchemaGenreOut, dependencies=[Depends(is_admin)])
 async def update_genre(genre_id: int, genre: SchemaGenreIn):
 	genre_dict = genre.dict()
 	await Genre.update(idx=genre_id, **genre_dict)

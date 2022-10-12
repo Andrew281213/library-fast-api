@@ -41,6 +41,7 @@ class UserOut(BaseOutSchema):
 	email: str
 	register_date: int
 	last_visit: int
+	is_admin: bool
 
 
 class UserDetailed(UserOut):

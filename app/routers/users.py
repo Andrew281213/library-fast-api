@@ -35,14 +35,14 @@ async def get_me(current_user: UserIn = Depends(get_current_user)):
 	return current_user
 
 
-@router.get("/", response_model=list[UserOut])
+@router.get("/", response_model=list[UserOut], dependencies=[Depends(get_current_user)])
 async def get_users():
 	users = await User.get_all()
 	users = [UserOut(**user) for user in users]
 	return users
 
 
-@router.get("/{username}", response_model=UserOut)
+@router.get("/{username}", response_model=UserOut, dependencies=[Depends(get_current_user)])
 async def get_user_by_username(username: str):
 	user = await User.get_by_username(username)
 	if user is None:
@@ -61,7 +61,7 @@ async def create_user(user: UserIn):
 
 
 @router.put("/{user_id}", status_code=200, response_model=UserOut)
-async def update_user(user_id: int, user: UserUpdate):
+async def update_user(user_id: int, user: UserUpdate = Depends(get_current_user)):
 	user_dict = user.dict()
 	try:
 		user_data = await User.update(idx=user_id, **user_dict)

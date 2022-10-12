@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from asyncpg.exceptions import UniqueViolationError
 
 from app.schemas.tag_schema import TagIn as SchemaTagIn, TagOut as SchemaTagOut
 from app.database.models.tag_model import Tag
+from app.utils.dependencies import is_admin, get_current_user
 
 
 router = APIRouter(prefix="/tags", tags=["tags"])
@@ -23,7 +24,7 @@ async def get_tag_by_id(tag_id: int):
 	return SchemaTagOut(**tag)
 
 
-@router.post("/", status_code=201)
+@router.post("/", status_code=201, dependencies=[Depends(get_current_user)])
 async def create_tag(tag: SchemaTagIn):
 	try:
 		tag_id = await Tag.create(**tag.dict())
@@ -32,8 +33,14 @@ async def create_tag(tag: SchemaTagIn):
 	return {"tag_id": tag_id}
 
 
-@router.put("/{tag_id}", status_code=200, response_model=SchemaTagOut)
+@router.put("/{tag_id}", status_code=200, response_model=SchemaTagOut, dependencies=[Depends(get_current_user)])
 async def update_tag(tag_id: int, tag: SchemaTagIn):
 	tag_dict = tag.dict()
 	await Tag.update(idx=tag_id, **tag_dict)
 	return SchemaTagOut(id=tag_id, **tag_dict)
+
+
+@router.delete("/{tag_id}", status_code=200, dependencies=[Depends(is_admin)])
+async def delete_tag(tag_id: int):
+	await Tag.delete(tag_id)
+	return {"id": tag_id}
