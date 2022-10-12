@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from asyncpg.exceptions import UniqueViolationError
 
-from ..schema import TagIn as SchemaTagIn, TagOut as SchemaTagOut
-from ..database.models import Tag
+from app.schemas.tag_schema import TagIn as SchemaTagIn, TagOut as SchemaTagOut
+from app.database.models.tag_model import Tag
 
 
 router = APIRouter(prefix="/tags", tags=["tags"])

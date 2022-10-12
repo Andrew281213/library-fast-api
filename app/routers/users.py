@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from asyncpg.exceptions import UniqueViolationError
 
-from ..schema import UserIn as SchemaUserIn, UserOut as SchemaUserOut
-from ..database.models import User
+from app.schemas.user_schema import UserIn as SchemaUserIn, UserOut as SchemaUserOut
+from app.database.models.user_model import User
 
 
 router = APIRouter(prefix="/users", tags=["users"])

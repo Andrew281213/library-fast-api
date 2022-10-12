@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from asyncpg.exceptions import UniqueViolationError
 
-from ..schema import GenreIn as SchemaGenreIn, GenreOut as SchemaGenreOut
-from ..database.models import Genre
+from app.schemas.genre_schema import GenreIn as SchemaGenreIn, GenreOut as SchemaGenreOut
+from app.database.models.genre_model import Genre
 
 
 router = APIRouter(prefix="/genres", tags=["genres"])

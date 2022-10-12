@@ -1,0 +1,25 @@
+POST http://localhost:8000/api/v1/genres/
+Content-Type: application/json
+
+{
+	"title": "Фантастика",
+    "description": "Описание жанра фантастика"
+}
+
+###
+POST http://localhost:8000/api/v1/genres/
+Content-Type: application/json
+
+{
+	"title": "Боевик",
+    "description": "Описание жанра боевик"
+}
+
+###
+POST http://localhost:8000/api/v1/genres/
+Content-Type: application/json
+
+{
+	"title": "Ужасы",
+    "description": "Описание жанра ужасы"
+}

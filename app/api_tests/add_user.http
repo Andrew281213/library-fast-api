@@ -1,0 +1,28 @@
+POST http://localhost:8000/api/v1/users/
+Content-Type: application/json
+
+{
+	"username": "test1",
+    "email": "test1@mail.ru",
+    "password": "super_pwd"
+}
+
+###
+POST http://localhost:8000/api/v1/users/
+Content-Type: application/json
+
+{
+	"username": "test2",
+    "email": "test2@mail.ru",
+    "password": "super_pwd"
+}
+
+###
+POST http://localhost:8000/api/v1/users/
+Content-Type: application/json
+
+{
+	"username": "test3",
+    "email": "test3@mail.ru",
+    "password": "super_pwd"
+}

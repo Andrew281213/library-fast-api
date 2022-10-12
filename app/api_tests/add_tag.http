@@ -2,5 +2,29 @@ POST http://localhost:8000/api/v1/tags/
 Content-Type: application/json
 
 {
+  "title": "test1"
+}
+
+###
+POST http://localhost:8000/api/v1/tags/
+Content-Type: application/json
+
+{
+  "title": "test2"
+}
+
+###
+POST http://localhost:8000/api/v1/tags/
+Content-Type: application/json
+
+{
   "title": "test3"
+}
+
+###
+POST http://localhost:8000/api/v1/tags/
+Content-Type: application/json
+
+{
+  "title": "test4"
 }

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from .database.db import db
-from .routers import users, tags, genres
+from app.database.db import db
+from app.routers import users, tags, genres
 
 
 app = FastAPI()
