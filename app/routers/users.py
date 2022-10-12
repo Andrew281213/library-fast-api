@@ -3,6 +3,7 @@ from asyncpg.exceptions import UniqueViolationError
 
 from app.schemas.user_schema import UserIn as SchemaUserIn, UserOut as SchemaUserOut, UserUpdate as SchemaUserUpdate
 from app.database.models.user_model import User
+from app.utils.users import get_hashed_password, verify_password
 
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -25,6 +26,7 @@ async def get_user_by_username(username: str):
 
 @router.post("/", status_code=201)
 async def create_user(user: SchemaUserIn):
+	user.password = get_hashed_password(user.password)
 	try:
 		user_id = await User.create(**user.dict())
 	except UniqueViolationError:
