@@ -32,7 +32,7 @@ async def create_tag(tag: SchemaTagIn):
 	return {"tag_id": tag_id}
 
 
-@router.put("/{tag_id}", status_code=200)
+@router.put("/{tag_id}", status_code=200, response_model=SchemaTagOut)
 async def update_tag(tag_id: int, tag: SchemaTagIn):
 	tag_dict = tag.dict()
 	await Tag.update(idx=tag_id, **tag_dict)

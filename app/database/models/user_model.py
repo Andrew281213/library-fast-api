@@ -44,3 +44,9 @@ class User:
 		query = users.insert().values(**user)
 		user_id = await db.execute(query)
 		return user_id
+
+	@classmethod
+	async def update(cls, idx, **user):
+		query = users.update(users.c.id == idx).values(**user)
+		await db.execute(query)
+		return await cls.get_by_id(idx)

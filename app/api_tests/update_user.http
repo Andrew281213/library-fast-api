@@ -1,0 +1,8 @@
+###
+PUT http://localhost:8000/api/v1/users/2
+Content-Type: application/json
+
+{
+    "email": "test2@ya.ru",
+    "password": "test2"
+}

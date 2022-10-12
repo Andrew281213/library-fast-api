@@ -13,8 +13,12 @@ class UserIn(BaseSchema):
 	last_visit: int = datetime.now().timestamp()
 
 
+class UserUpdate(BaseSchema):
+	email: str
+	password: str
+
+
 class UserOut(BaseOutSchema):
-	id: int
 	username: str
 	email: str
 	register_date: int
