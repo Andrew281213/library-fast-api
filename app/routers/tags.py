@@ -30,3 +30,10 @@ async def create_tag(tag: SchemaTagIn):
 	except UniqueViolationError:
 		raise HTTPException(status_code=400, detail="Tag already exists")
 	return {"tag_id": tag_id}
+
+
+@router.put("/{tag_id}", status_code=200)
+async def update_tag(tag_id: int, tag: SchemaTagIn):
+	tag_dict = tag.dict()
+	await Tag.update(idx=tag_id, **tag_dict)
+	return SchemaTagOut(id=tag_id, **tag_dict)

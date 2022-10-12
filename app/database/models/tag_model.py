@@ -31,3 +31,8 @@ class Tag:
 		query = tags.insert().values(**tag)
 		tag_id = await db.execute(query)
 		return tag_id
+	
+	@classmethod
+	async def update(cls, idx, **tag):
+		query = tags.update(tags.c.id == idx).values(**tag)
+		await db.execute(query)

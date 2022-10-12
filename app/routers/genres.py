@@ -34,5 +34,6 @@ async def create_genre(genre: SchemaGenreIn):
 
 @router.put("/{genre_id}", status_code=200)
 async def update_genre(genre_id: int, genre: SchemaGenreIn):
-	await Genre.update(idx=genre_id, **genre.dict())
-	return SchemaGenreOut(id=genre_id, **genre.dict())
+	genre_dict = genre.dict()
+	await Genre.update(idx=genre_id, **genre_dict)
+	return SchemaGenreOut(id=genre_id, **genre_dict)
