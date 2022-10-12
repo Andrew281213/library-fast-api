@@ -1,6 +1,24 @@
 from datetime import datetime
+from pydantic import UUID4, BaseModel, Field, validator
+from typing import Optional
 
 from .schema import BaseSchema, BaseOutSchema
+
+
+class TokenBase(BaseModel):
+	token: UUID4 = Field(alias="access_token")
+	expires: datetime
+	token_type: Optional[str] = "bearer"
+	
+	class Config:
+		allow_population_by_field_name = True
+		json_encoders = {
+			datetime: lambda x: x.timestamp()
+		}
+	
+	@validator("token")
+	def hexlify_token(cls, value):
+		return value.hex
 
 
 class UserIn(BaseSchema):
@@ -23,3 +41,7 @@ class UserOut(BaseOutSchema):
 	email: str
 	register_date: int
 	last_visit: int
+
+
+class UserDetailed(UserOut):
+	token: TokenBase = {}
