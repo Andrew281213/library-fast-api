@@ -8,4 +8,7 @@ class GenreIn(BaseSchema):
 
 class GenreOut(BaseOutSchema):
 	title: str
+
+
+class GenreDetailOut(GenreOut):
 	description: str
